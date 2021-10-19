@@ -1,0 +1,57 @@
+.counter__wrapper {
+    border: cornflowerblue 2px solid; padding: 10px;
+    border-radius: 20px;
+    width: 200px;
+    margin: 10px;
+}
+
+.counter__currentValue {
+    font-size: 50px;
+    min-height: 75px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    border: cornflowerblue solid 2px;
+    background-color: cornflowerblue;
+}
+
+.counter__currentValue_notInteger {
+    font-size: 12px;
+    min-height: 75px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    border: cornflowerblue solid 2px;
+    background-color: cornflowerblue;
+}
+
+.counter__currentMaxValue {
+    font-size: 50px;
+    color: #bb0000;
+    min-height: 75px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    border: cornflowerblue solid 2px;
+    background-color: cornflowerblue;
+}
+
+.counter__currentValueWithError {
+    font-size: 12px;
+    min-height: 75px;
+    color: #bb0000;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    border: #bb0000 solid 2px;
+    background-color: cornflowerblue;
+}
+
+.counter__monitorPanel {
+    border: cornflowerblue 2px solid;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}

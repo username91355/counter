@@ -1,0 +1,19 @@
+.counterSettings__wrapper {
+    border: cornflowerblue 2px solid; padding: 10px;
+    border-radius: 20px;
+    width: 200px;
+    margin: 10px;
+}
+
+.counterSettings__inputPanel {
+    min-height: 120px;
+    border-radius: 10px;
+    background-color: cornflowerblue;
+}
+
+.counterSettings__monitorPanel {
+    border: cornflowerblue 2px solid; padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-align: center;
+}

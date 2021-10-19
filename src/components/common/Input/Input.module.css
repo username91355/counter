@@ -1,0 +1,27 @@
+.input__wrapper {
+    display: flex;
+    padding: 10px;
+}
+
+.input__title {
+    font-weight: 700;
+    min-width: 100px;
+    color: #282c34;
+}
+
+.input__body {
+    width: 80px;
+    font-size: 20px;
+    border:  #282c34 2px solid;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.input__bodyWithError {
+    width: 80px;
+    color: #bb0000;
+    font-size: 20px;
+    border: 2px #bb0000 solid;
+    border-radius: 10px;
+    text-align: center;
+}
