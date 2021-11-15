@@ -1,16 +1,35 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Counter} from "./components/Counter/Counter";
 import {CounterSettings} from "./components/CounterSettings/CounterSettings";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./redux/store";
+import {
+    ErrorType,
+    setCountButtonDisabled,
+    setCurrentValue,
+    setError,
+    setResetButtonDisabled,
+    setStartCountValue
+} from './redux/counter-reducer';
 
 function App() {
 
-    const [currentValue, setCurrentValue] = useState<number | null>(null)
-    const [maxCountValue, setMaxCountValue] = useState<number>(0)
-    const [startCountValue, setStartCountValue] = useState<number>(0)
-    const [resetButtonDisabled, setResetButtonDisabled] = useState<boolean>(true)
-    const [countButtonDisabled, setCountButtonDisabled] = useState<boolean>(false)
-    const [error, setError] = useState<string | null>(null)
+    // @ts-ignore
+    const currentValue = useSelector<AppStateType, number>(store => store.counter.currentValue)
+    // @ts-ignore
+    const error = useSelector<AppStateType, ErrorType>(store => store.counter.error)
+    // @ts-ignore
+    const maxCountValue = useSelector<AppStateType, number>(store => store.counter.maxCountValue)
+    // @ts-ignore
+    const startCountValue = useSelector<AppStateType,number>( store => store.counter.startCountValue)
+    // @ts-ignore
+    const resetButtonDisabled = useSelector<AppStateType, boolean>(store => store.counter.resetButtonDisabled)
+    // @ts-ignore
+    const countButtonDisabled = useSelector<AppStateType, boolean>(store => store.counter.countButtonDisabled)
+
+    const dispatch = useDispatch()
+
 
     useEffect(() => {
 
@@ -18,11 +37,11 @@ function App() {
         let error = localStorage.getItem('Error log')
 
         if (value) {
-            setCurrentValue(JSON.parse(value))
+            dispatch(setCurrentValue(JSON.parse(value)))
         }
 
-        if(error) {
-            setError(JSON.parse(error))
+        if (error) {
+            dispatch(setError(JSON.parse(error)))
         }
 
     }, [])
@@ -33,7 +52,7 @@ function App() {
             localStorage.setItem('Current value', JSON.stringify(currentValue))
         }
 
-        if(error || error === null) {
+        if (error || error === null) {
             localStorage.setItem('Error log', JSON.stringify(error))
         }
 
@@ -44,33 +63,33 @@ function App() {
             return
         } else {
             if (currentValue + 1 < maxCountValue) {
-                setCurrentValue(currentValue + 1)
-                setResetButtonDisabled(false)
+                dispatch(setCurrentValue(currentValue + 1))
+                dispatch(setResetButtonDisabled(false))
             } else if (currentValue + 1 === maxCountValue) {
-                setCurrentValue(currentValue + 1)
-                setCountButtonDisabled(true)
-                setResetButtonDisabled(false)
+                dispatch(setCurrentValue(currentValue + 1))
+                dispatch(setCountButtonDisabled(true))
+                dispatch(setResetButtonDisabled(false))
             }
         }
 
     }
 
     const setMinValue = (n: number) => {
-        setStartCountValue(n)
-        setCurrentValue(n)
-        setCountButtonDisabled(false)
-        setResetButtonDisabled(true)
+        dispatch(setStartCountValue(n))
+        dispatch(setCurrentValue(n))
+        dispatch(setCountButtonDisabled(false))
+        dispatch(setResetButtonDisabled(true))
     }
 
     const resetValue = () => {
         if (currentValue === null) {
             return
         } else {
-            if(currentValue) {
+            if (currentValue) {
                 if (currentValue > startCountValue) {
-                    setCurrentValue(startCountValue)
-                    setResetButtonDisabled(true)
-                    setCountButtonDisabled(false)
+                    dispatch(setCurrentValue(startCountValue))
+                    dispatch(setResetButtonDisabled(true))
+                    dispatch(setCountButtonDisabled(false))
                 }
             }
         }
@@ -89,12 +108,7 @@ function App() {
                          resetValue={resetValue}
                 />
                 <CounterSettings error={error}
-                                 setError={setError}
                                  setMinValue={setMinValue}
-                                 setMaxValue={setMaxCountValue}
-                                 setCurrentValue={setCurrentValue}
-                                 setCountButtonDisabled={setCountButtonDisabled}
-                                 setResetButtonDisabled={setResetButtonDisabled}
                 />
             </div>
         </div>

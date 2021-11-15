@@ -2,26 +2,20 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import styles from "./CounterSettings.module.css";
 import {Button} from "../common/Button/Button";
 import {Input} from "../common/Input/Input";
+import {useDispatch} from "react-redux";
+import {setCountButtonDisabled, setCurrentValue, setError, setMaxCountValue, setResetButtonDisabled} from "../../redux/counter-reducer";
 
 type CounterSettingsPropsType = {
     error: string | null
-    setError: (e: string | null) => void
     setMinValue: (n: number) => void
-    setMaxValue: (n: number) => void
-    setCurrentValue: (n: number | null) => void
-    setCountButtonDisabled: (b: boolean) => void
-    setResetButtonDisabled: (b: boolean) => void
 }
 
 export const CounterSettings: React.FC<CounterSettingsPropsType> = ({
                                                                         error,
-                                                                        setError,
-                                                                        setMinValue,
-                                                                        setMaxValue,
-                                                                        setCurrentValue,
-                                                                        setCountButtonDisabled,
-                                                                        setResetButtonDisabled
+                                                                        setMinValue
                                                                     }) => {
+
+    const dispatch = useDispatch()
 
     const [min, setMin] = useState<number>(0)
     const [max, setMax] = useState<number>(0)
@@ -53,44 +47,44 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = ({
 
     const setSettingMinHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setMin(Number(e.currentTarget.value))
-        setError(null)
-        setCurrentValue(null)
+        dispatch(setError(null))
+        dispatch(setCurrentValue(null))
         if (Number(e.currentTarget.value) < 0) {
-            setError('Input Error: The entered data must be a positive integer')
-            setCountButtonDisabled(true)
-            setResetButtonDisabled(true)
+            dispatch(setError('Input Error: The entered data must be a positive integer'))
+            dispatch(setCountButtonDisabled(true))
+            dispatch(setResetButtonDisabled(true))
             return;
         }
     }
 
     const setSettingMaxHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setMax(Number(e.currentTarget.value))
-        setError(null)
-        setCurrentValue(null)
+        dispatch(setError(null))
+        dispatch(setCurrentValue(null))
         if (Number(e.currentTarget.value) < 0) {
-            setError('Input Error: The entered data must be a positive integer')
-            setCountButtonDisabled(true)
-            setResetButtonDisabled(true)
+            dispatch(setError('Input Error: The entered data must be a positive integer'))
+            dispatch(setCountButtonDisabled(true))
+            dispatch(setResetButtonDisabled(true))
             return;
         }
     }
 
     const setSettingClickHandler = () => {
         if (min < 0 || max < 0) {
-            setError('Input Error: The entered data must be a positive integer')
-            setCountButtonDisabled(true)
-            setResetButtonDisabled(true)
+            dispatch(setError('Input Error: The entered data must be a positive integer'))
+            dispatch(setCountButtonDisabled(true))
+            dispatch(setResetButtonDisabled(true))
             return;
         }
         if (min >= max) {
-            setError('Input Error: "Min value" must be less than "Max value"')
-            setCountButtonDisabled(true)
-            setResetButtonDisabled(true)
+            dispatch(setError('Input Error: "Min value" must be less than "Max value"'))
+            dispatch(setCountButtonDisabled(true))
+            dispatch(setResetButtonDisabled(true))
             return;
         }
         setMinValue(min)
-        setMaxValue(max)
-        setError(null)
+        dispatch(setMaxCountValue(max))
+        dispatch(setError(null))
     }
 
     return (
@@ -109,7 +103,7 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = ({
             <div className={styles.counterSettings__monitorPanel}>
                 <Button buttonName={'Set'}
                         onClickHandler={setSettingClickHandler}
-                        isDisable={(error) ? true : false}/>
+                        isDisable={!!(error)}/>
             </div>
         </div>
     )

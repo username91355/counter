@@ -1,6 +1,8 @@
 import React from "react";
 import styles from './Counter.module.css'
 import {Button} from "../common/Button/Button";
+import {useDispatch} from "react-redux";
+import {setResetButtonDisabled} from "../../redux/counter-reducer";
 
 type CounterPropsType = {
     currentValue: number | null
